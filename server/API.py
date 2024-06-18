@@ -71,6 +71,33 @@ def get_day_pool_data():
 
     return jsonify(rows)
 
+# Gets the last hour of data from the database
+@app.route('/api/hourPoolData', methods=['GET'])
+def get_hour_pool_data():
+    update_database()
+    conn = connect_to_database()
+
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM poolData WHERE STR_TO_DATE(UncleanedTime, '%m/%d/%Y %H:%i:%s') > DATE_SUB(NOW(), INTERVAL 1 HOUR)")
+    rows = cursor.fetchall()
+
+    return jsonify(rows)
+
+# Get the average temperature of the pool for all time by week
+# Breaks the data into weeks and averages the pool temperature for each week
+@app.route('/api/averagePoolTempByWeek', methods=['GET'])
+def get_average_pool_temp_by_week():
+    update_database()
+    conn = connect_to_database()
+
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT AVG(Pool1) as avgPoolTemp, WEEK(STR_TO_DATE(UncleanedTime, '%m/%d/%Y %H:%i:%s')) as week FROM poolData GROUP BY week")
+    rows = cursor.fetchall()
+
+    return jsonify(rows)
+
 # Helpers
 # Update the data in the database
 def update_database():
