@@ -1,0 +1,6 @@
+{
+    "host": "ex:localhost",
+    "user": "ex:root",
+    "password": "ex:Password123",
+    "database": "pool"
+}
