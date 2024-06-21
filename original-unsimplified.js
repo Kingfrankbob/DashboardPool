@@ -1,5 +1,5 @@
-const API = "AIzaSyCzVgFP8yfmmS71Uuj9kCBlAntlRrTXrNQ";
-const SID = "1OwsrJNNC_yWgsHPLPhn3ejGUjmebfZq4yyDnCup9hDw";
+const API = "API KEY";
+const SID = "SHEET ID";
 var SN = "Summary";
 
 var firstDay = new Date(2024, 0, 1);
