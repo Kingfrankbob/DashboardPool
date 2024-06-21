@@ -15,7 +15,7 @@ class SQLInterface:
 
     def fetchData(self):
         try:
-            response = self.requests.get('https://sheets.googleapis.com/v4/spreadsheets/1OwsrJNNC_yWgsHPLPhn3ejGUjmebfZq4yyDnCup9hDw/values/DataLogger?key=AIzaSyCzVgFP8yfmmS71Uuj9kCBlAntlRrTXrNQ')
+            response = self.requests.get('https://sheets.googleapis.com/v4/spreadsheets/GITHUB_SCRET_SHEET_ID/values/DataLogger?key=GITHUB_SECRET_API_KEY')
             data = response.json()
 
             headers = data['values'][0]
