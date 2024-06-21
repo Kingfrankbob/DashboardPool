@@ -1,5 +1,5 @@
-const API = "AIzaSyCzVgFP8yfmmS71Uuj9kCBlAntlRrTXrNQ";
-const SID = "1OwsrJNNC_yWgsHPLPhn3ejGUjmebfZq4yyDnCup9hDw";
+const API = "Ask_For_key";
+const SID = "Ask_For_ID";
 const SN_SUMMARY = "Summary";
 const SN_DATALOGGER = "DataLogger";
 let firstDay, lastDay, dataCap;
