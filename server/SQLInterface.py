@@ -63,6 +63,35 @@ class SQLInterface:
 
         conn.commit()
         print('Data inserted successfully')
+
+    def insert_data(self, tag, air1, air2, pool1, pool2, pump_on, heater_on, solar_on):
+        with open('server/SQLConfig.json') as config_file:
+            config = json.load(config_file)
+
+        conn = mysql.connector.connect(
+            host=config["host"],
+            user=config["user"],
+            password=config["password"],
+            database=config["database"]
+        )
+
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT MAX(ID) FROM poolData")
+        max_id = cursor.fetchone()[0]
+        next_id = max_id + 1 if max_id is not None else 1
+
+        current_time = datetime.datetime.now().strftime('%m/%d/%Y %H:%M:%S')
+
+        values = (next_id, tag, air1, air2, pool1, pool2, current_time, pump_on, heater_on, solar_on)
+        query = "INSERT INTO poolData (ID, Tag, Air1, Air2, Pool1, Pool2, UncleanedTime, PumpOn, HeaterOn, SolarOn) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+
+        cursor.execute(query, values)
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+        print('New data inserted successfully')
   
 
 def main():

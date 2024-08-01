@@ -1,5 +1,5 @@
 import json
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import mysql.connector
 from SQLInterface import SQLInterface
 
@@ -97,6 +97,27 @@ def get_average_pool_temp_by_week():
     rows = cursor.fetchall()
 
     return jsonify(rows)
+
+@app.route('/api/insertValue', methods=['POST'])
+def insert_value():
+    try:
+        data = request.get_json()
+        tag = data.get('tag')
+        air1 = data.get('air1')
+        air2 = data.get('air2')
+        pool1 = data.get('pool1')
+        pool2 = data.get('pool2')
+        pump_on = data.get('pump_on')
+        heater_on = data.get('heater_on')
+        solar_on = data.get('solar_on')
+
+        sql = SQLInterface()
+        sql.insert_data(tag, air1, air2, pool1, pool2, pump_on, heater_on, solar_on)
+
+        return jsonify({'message': 'Data inserted successfully'}), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 # Helpers
 # Update the data in the database
