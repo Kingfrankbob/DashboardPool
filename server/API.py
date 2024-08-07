@@ -9,7 +9,7 @@ app = Flask(__name__)
 # Gets all the data from the database
 @app.route('/api/allPoolData', methods=['GET'])
 def get_pool_data():
-    update_database()
+    # update_database()
     conn = connect_to_database()
 
     cursor = conn.cursor(dictionary=True)
@@ -22,7 +22,7 @@ def get_pool_data():
 # Gets the last year of data from the database
 @app.route('/api/yearPoolData', methods=['GET'])
 def get_year_pool_data():
-    update_database()
+    # update_database()
     conn = connect_to_database()
 
     cursor = conn.cursor(dictionary=True)
@@ -35,7 +35,7 @@ def get_year_pool_data():
 # Gets the last month of data from the database
 @app.route('/api/monthPoolData', methods=['GET'])
 def get_month_pool_data():
-    update_database()
+    # update_database()
     conn = connect_to_database()
 
     cursor = conn.cursor(dictionary=True)
@@ -48,7 +48,7 @@ def get_month_pool_data():
 # Gets the last week of data from the database
 @app.route('/api/weekPoolData', methods=['GET'])
 def get_week_pool_data():
-    update_database()
+    # update_database()
     conn = connect_to_database()
 
     cursor = conn.cursor(dictionary=True)
@@ -61,7 +61,7 @@ def get_week_pool_data():
 # Gets the last day of data from the database
 @app.route('/api/dayPoolData', methods=['GET'])
 def get_day_pool_data():
-    update_database()
+    # update_database()
     conn = connect_to_database()
 
     cursor = conn.cursor(dictionary=True)
@@ -74,7 +74,7 @@ def get_day_pool_data():
 # Gets the last hour of data from the database
 @app.route('/api/hourPoolData', methods=['GET'])
 def get_hour_pool_data():
-    update_database()
+    # update_database()
     conn = connect_to_database()
 
     cursor = conn.cursor(dictionary=True)
@@ -88,7 +88,7 @@ def get_hour_pool_data():
 # Breaks the data into weeks and averages the pool temperature for each week
 @app.route('/api/averagePoolTempByWeek', methods=['GET'])
 def get_average_pool_temp_by_week():
-    update_database()
+    # update_database()
     conn = connect_to_database()
 
     cursor = conn.cursor(dictionary=True)
