@@ -127,7 +127,7 @@ def update_database():
 
 
 def connect_to_database():
-    with open('server/SQLConfig.json') as config_file:
+    with open('/home/pooldbpi/Downloads/DashBoardPool-main/SQLConfig.json') as config_file:
         config = json.load(config_file)
 
     conn = mysql.connector.connect(

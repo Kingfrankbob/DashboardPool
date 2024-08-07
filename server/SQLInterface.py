@@ -28,7 +28,7 @@ class SQLInterface:
 
 
     def putData(self):
-        with open('server/SQLConfig.json') as config_file:
+        with open('/home/pooldbpi/Downloads/DashBoardPool-main/SQLConfig.json') as config_file:
             config = json.load(config_file)
 
         conn = mysql.connector.connect(
@@ -64,15 +64,34 @@ class SQLInterface:
         conn.commit()
         print('Data inserted successfully')
 
+    def sheets_have_id(self, id):
+        try:
+            response = self.requests.get('https://sheets.googleapis.com/v4/spreadsheets/GITHUB_SCRET_SHEET_ID/values/DataLogger?key=GITHUB_SECRET_API_KEY')
+            data = response.json()
+
+            headers = data['values'][0]
+            values = data['values'][1:]
+
+            data = [dict(zip(headers, row)) for row in values]
+
+            for row in data:
+                if row["ID"] == id:
+                    return True
+                    
+        except:
+            print('Error fetching data from google sheets')
+            
+        return False
+
     def insert_data(self, tag, air1, air2, pool1, pool2, pump_on, heater_on, solar_on):
-        with open('server/SQLConfig.json') as config_file:
+        with open('/home/pooldbpi/Downloads/DashBoardPool-main/SQLConfig.json') as config_file:
             config = json.load(config_file)
 
         conn = mysql.connector.connect(
             host=config["host"],
             user=config["user"],
             password=config["password"],
-            database=config["database"]
+            database=config["database"],
         )
 
         cursor = conn.cursor()
@@ -80,6 +99,11 @@ class SQLInterface:
         cursor.execute("SELECT MAX(ID) FROM poolData")
         max_id = cursor.fetchone()[0]
         next_id = max_id + 1 if max_id is not None else 1
+
+        if not self.sheets_have_id(next_id):
+            requests.get(f'https://script.google.com/macros/s/{config["macro"]}/exec?tag={tag}&air1={air1}' + \
+                f'&air2={air2}&pool1={pool1}&pool2={pool2}&pump_on={pump_on}&heater_on={heater_on}&solar_on={solar_on}')
+
 
         current_time = datetime.datetime.now().strftime('%m/%d/%Y %H:%M:%S')
 
